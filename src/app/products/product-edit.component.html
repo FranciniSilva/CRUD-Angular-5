@@ -1,0 +1,173 @@
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    {{pageTitle}}
+  </div>
+
+  <div class="panel-body">
+    <form class="form-horizontal" novalidate (ngSubmit)="saveProduct()" [formGroup]="productForm">
+      <fieldset>
+        <div class="form-group" [ngClass]="{'has-error': displayMessage.productName }">
+          <label class="col-md-2 control-label" for="productNameId">Nome do Produto</label>
+
+          <div class="col-md-8">
+            <input class="form-control" id="productNameId" type="text" placeholder="Nome (requerido)" formControlName="productName" />
+            <span class="help-block" *ngIf="displayMessage.productName">
+              {{displayMessage.productName}}
+            </span>
+          </div>
+        </div>
+
+        <div class="form-group" [ngClass]="{'has-error': displayMessage.productCode}">
+          <label class="col-md-2 control-label" for="productCodeId">Código do Produto</label>
+
+          <div class="col-md-8">
+            <input class="form-control" id="productCodeId" type="text" placeholder="Código (requerido)" formControlName="productCode"
+            />
+            <span class="help-block" *ngIf="displayMessage.productCode">
+              {{displayMessage.productCode}}
+            </span>
+          </div>
+        </div>
+
+        <div class="form-group" [ngClass]="{'has-error': displayMessage.price}">
+          <label class="col-md-2 control-label" for="productPriceId">Preço do Produto</label>
+
+          <div class="col-md-8">
+            <input class="form-control" id="productPriceId" type="text" placeholder="Preço (requerido)" formControlName="price" />
+            <span class="help-block" *ngIf="displayMessage.price">
+              {{displayMessage.price}}
+            </span>
+          </div>
+        </div>
+
+        <div class="form-group" [ngClass]="{'has-error': displayMessage.zip}">
+          <label class="col-md-2 control-label" for="zip">Insira o CEP para localizar o endereço do fornecedor</label>
+          <div class="col-md-8">
+            <input class="form-control" id="zip" input="text" placeholder="CEP" formControlName="zip" required>
+            <span *ngIf="displayMessage.zip" class="help-block">
+              {{ displayMessage.zip}}
+            </span>
+          </div>
+        </div>
+        <div class="form-group" [ngClass]="{'has-error': displayMessage.street}">
+          <label class="col-md-2 control-label" for="street">Logradouro</label>
+          <div class="col-md-8">
+            <input class="form-control" id="street" placeholder="Rua" type="text" formControlName="street" required>
+            <span *ngIf="displayMessage.street" class="help-block">
+              {{ displayMessage.street }}
+            </span>
+          </div>
+        </div>
+        <div class="form-group" >
+          <label class="col-md-2 control-label" for="number">Número</label>
+          <div class="col-md-4">
+            <input class="form-control" id="number" placeholder="Número" formControlName="number">
+          </div>
+
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label" for="complement">Complemento</label>
+          <div class="col-md-4">
+            <input class="form-control" type="text" formControlName="complement" placeholder="Compl">
+          </div>
+        </div>
+
+        <div class="form-group" [ngClass]="{'has-error': displayMessage.neighborhood}">
+          <label class="col-md-2 control-label" for="neighborhood">Bairro</label>
+          <div class="col-md-8">
+            <input class="form-control" id="neighborhood" placeholder="Bairro" type="text" formControlName="neighborhood" required>
+            <span *ngIf="displayMessage.neighborhood" class="help-block">
+              {{ displayMessage.neighborhood }}
+            </span>
+          </div>
+
+        </div>
+
+        <div class="form-group" [ngClass]="{'has-error': displayMessage.city}">
+          <label class="col-md-2 control-label" for="city">Cidade</label>
+          <div class="col-md-8">
+            <select class="form-control" formControlName="city" id="city">
+              <option value="" disabled selected hidden>Selecione uma Cidade...</option>
+              <option *ngFor="let city of listStates" [value]="city.name">{{city.name}}</option>
+            </select>
+            <span *ngIf="displayMessage.city" class="help-block">
+              {{ displayMessage.city }}
+            </span>
+          </div>
+        </div>
+        <div class="form-group" [ngClass]="{'has-error': displayMessage.uf}">
+          <label class="col-md-2 control-label" for="uf">UF</label>
+          <div class="col-md-8">
+            <select class="form-control" formControlName="uf" id="uf">
+              <option value="" disabled selected hidden>Selecione um UF...</option>
+              <option *ngFor="let uf of listUF" [value]="uf">{{uf}}</option>
+            </select>
+            <span *ngIf="displayMessage.uf" cclass="help-block">
+              {{ displayMessage.uf }}
+            </span>
+          </div>
+        </div>
+
+        <div class="form-group" [ngClass]="{'has-error': displayMessage.starRating}">
+          <label class="col-md-2 control-label" for="starRatingId">Avaliação (1-5)</label>
+
+          <div class="col-md-8">
+            <input class="form-control" id="starRatingId" type="text" placeholder="Avaliação" formControlName="starRating" />
+            <span class="help-block" *ngIf="displayMessage.starRating">
+              {{displayMessage.starRating}}
+            </span>
+          </div>
+        </div>
+
+        <div formArrayName="tags">
+          <div class="row">
+            <button class="col-md-offset-1 col-md-1 btn btn-default" type="button" (click)="addTag()">+ Tag
+            </button>
+          </div>
+          <div class="form-group" *ngFor="let tag of tags.controls; let i=index">
+            <label class="col-md-2 control-label" [attr.for]="i">Tag</label>
+
+            <div class="col-md-8">
+              <input class="form-control" [id]="i" type="text" placeholder="Tag" [formControlName]="i" />
+            </div>
+            <button class="col-md-1 btn btn-warning" type="button" (click)="deleteTag(i)">- Tag
+            </button>
+          </div>
+        </div>
+
+        <div class="form-group" [ngClass]="{'has-error': displayMessage.description}">
+          <label class="col-md-2 control-label" for="descriptionId">Descrição</label>
+
+          <div class="col-md-8">
+            <textarea class="form-control" id="descriptionId" placeholder="Descrição" rows=3 formControlName="description"></textarea>
+            <span class="help-block" *ngIf="displayMessage.description">
+              {{ displayMessage.description}}
+            </span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="col-md-4 col-md-offset-2">
+            <span>
+              <button class="btn btn-primary" type="submit" style="width:80px;margin-right:10px" [disabled]='!productForm.valid'>
+                Salvar
+              </button>
+            </span>
+            <span>
+              <a class="btn btn-default" style="width:80px" [routerLink]="['/products']">
+                Cancelar
+              </a>
+            </span>
+            <span>
+              <a class="btn btn-default" style="width:80px" (click)="deleteProduct()">
+                Remover
+              </a>
+            </span>
+          </div>
+        </div>
+      </fieldset>
+    </form>
+    <div class='has-error' *ngIf='errorMessage'>{{errorMessage}}</div>
+  </div>
+
+</div>
