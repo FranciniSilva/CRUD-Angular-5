@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Project
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.7.3.
@@ -37,4 +36,4 @@ Backend criando utilizando angular in memory web api (simulador de backend e int
 Para executar a aplicação basta fazer o download em seu computador, ter instalado o node, npm e o angular cli.
 navegue até a pasta raiz da aplicação() e digite npm install para instalar as dependencias exigidas pelo projeto.
 Para rodar a aplicação basta digitar no console ng serve ou npm start.
->>>>>>> 43508ae448fa65757cbe76ed188d8b08c85ac6a5
+
